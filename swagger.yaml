@@ -261,7 +261,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Post'
+                $ref: '#/components/schemas/Category'
   
 
   /login:
@@ -445,12 +445,6 @@ components:
           type: integer
           format: long
           example: 1
-        createdAt:
-          type: integer
-          format: int32
-        updatedAt:
-          type: integer
-          format: int32
         name:
           type: string
           example: category1
