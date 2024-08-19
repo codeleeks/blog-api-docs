@@ -48,7 +48,7 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/PostPageResponse'
-  /post/{postId}:
+  /posts/{postId}:
     get:
       tags:
         - post
@@ -66,22 +66,8 @@ paths:
       responses:
         '200':
           description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Post'          
         '400':
           description: Invalid ID supplied
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiResponse'
-        '404':
-          description: Post not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiResponse'
     put:
       tags:
         - post
@@ -106,22 +92,8 @@ paths:
       responses:
         '200':
           description: Successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiResponse'
         '400':
-          description: Invalid ID supplied
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiResponse'
-        '404':
-          description: Post not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiResponse'
+          description: Invalid input
         '422':
           description: Validation exception
           content:
@@ -158,10 +130,6 @@ paths:
                 $ref: '#/components/schemas/ApiResponse'       
         '400':
           description: Invalid input
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiResponse'
         '422':
           description: Validation exception
           content:
@@ -185,22 +153,230 @@ paths:
       responses:
         '200':
           description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiResponse'          
         '400':
-          description: Invalid ID supplied
+          description: Invalid input
+        '422':
+          description: Validation exception
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ApiResponse'
-        '404':
-          description: Post not found
+
+          
+  /posts/{postId}/title:
+    put:
+      tags:
+        - post
+      summary: Updates title of the post
+      description: Updates title of the post
+      operationId: updatePostTitle
+      parameters:
+        - in: path
+          name: postId
+          description: post id
+          required: true
+          schema:
+            type: integer
+            format: long
+      requestBody:
+        description: post title update request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PostTitleUpdate'
+      responses:
+        '200':
+          description: successful operation
+        '400':
+          description: Invalid input
+        '422':
+          description: Validation exception
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ApiResponse'
+      
+  /posts/{postId}/contents:
+    put:
+      tags:
+        - post
+      summary: Updates contents of the post
+      description: Updates contents of the post
+      operationId: updatePostContents
+      parameters:
+        - in: path
+          name: postId
+          description: post id
+          required: true
+          schema:
+            type: integer
+            format: long
+      requestBody:
+        description: post contents update request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PostContentsUpdate'
+      responses:
+        '200':
+          description: successful operation
+        '400':
+          description: Invalid input
+        '422':
+          description: Validation exception
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+          
+  /posts/{postId}/likes:
+    post:
+      tags:
+        - post
+      summary: Increments likes of the post
+      description: Increments likes of the post
+      operationId: incrementPostLikes
+      parameters:
+        - in: path
+          name: postId
+          description: post id
+          required: true
+          schema:
+            type: integer
+            format: long
+      responses:
+        '200':
+          description: successful operation
+        '400':
+          description: Invalid input
+      
+    delete:
+      tags:
+        - post
+      summary: Decrements likes of the post
+      description: Decrements likes of the post
+      operationId: decrementPostLikes
+      parameters:
+        - in: path
+          name: postId
+          description: post id
+          required: true
+          schema:
+            type: integer
+            format: long
+      responses:
+        '200':
+          description: successful operation
+        '400':
+          description: Invalid input
+          
+  /posts/{postId}/comments:
+    post:
+      tags:
+        - post
+      summary: Creates comments of the post
+      description: Creates comments of the post
+      operationId: createPostComments
+      parameters:
+        - in: path
+          name: postId
+          description: post id
+          required: true
+          schema:
+            type: integer
+            format: long
+      requestBody:
+        description: comment create request object
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PostCommentCreate'
+        
+      responses:
+        '200':
+          description: successful operation
+        '400':
+          description: Invalid input
+        '422':
+          description: Validation exception
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+          
+  /posts/{postId}/comments/{commentId}:
+    put:
+      tags:
+        - post
+      summary: Updates comments of the post
+      description: Updates comments of the post
+      operationId: updatePostComments
+      parameters:
+        - in: path
+          name: postId
+          description: post id
+          required: true
+          schema:
+            type: integer
+            format: long
+        - in: path
+          name: commentId
+          description: comment id
+          required: true
+          schema:
+            type: integer
+            format: long
+      requestBody:
+        description: comment update request object
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PostCommentUpdate'
+        
+      responses:
+        '200':
+          description: successful operation
+        '400':
+          description: Invalid input
+        '422':
+          description: Validation exception
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+    delete:
+      tags:
+        - post
+      summary: Deletes comments of the post
+      description: Deletes comments of the post
+      operationId: deletePostComments
+      parameters:
+        - in: path
+          name: postId
+          description: post id
+          required: true
+          schema:
+            type: integer
+            format: long
+        - in: path
+          name: commentId
+          description: comment id
+          required: true
+          schema:
+            type: integer
+            format: long
+      responses:
+        '200':
+          description: successful operation
+        '400':
+          description: Invalid input
+        '422':
+          description: Validation exception
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+
   /posts/filters:
     post:
       tags:
@@ -262,8 +438,47 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Category'
+  /categories/{categoryId}/posts/{postId}:
+    put:
+      tags:
+        - category
+      summary: Updates category of the post
+      description: Updates category of the post
+      operationId: updatePostCategory
+      parameters:
+        - in: path
+          name: postId
+          description: post id
+          required: true
+          schema:
+            type: integer
+            format: long
+        - in: path
+          name: categoryId
+          description: comment id
+          required: true
+          schema:
+            type: integer
+            format: long
+      requestBody:
+        description: comment update request object
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PostCategoryUpdate'
+        
+      responses:
+        '200':
+          description: successful operation
+        '400':
+          description: Invalid input
+        '422':
+          description: Validation exception
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
   
-
   /login:
     post:
       tags:
@@ -503,6 +718,9 @@ components:
 
     ApiResponse:
       type: object
+      properties:
+        message:
+          type: string
           
     PostPageResponse:
       type: object
@@ -566,6 +784,41 @@ components:
               type: boolean
         empty:
           type: boolean
+    PostTitleUpdate:
+      type: object
+      description: request object for updating post title
+      properties:
+        title:
+          type: string
+    PostContentsUpdate:
+      type: object
+      description: request object for updating post contents
+      properties:
+        contents:
+          type: string
+    PostCategoryUpdate:
+      type: object
+      description: request object for updating post category
+      properties:
+        category:
+          $ref: '#/components/schemas/Category'
+    PostCommentCreate:
+      type: object
+      description: request object for creating comments
+      properties:
+        title:
+          type: string
+        contents:
+          type: string
+    PostCommentUpdate:
+      type: object
+      description: request object for updating comments
+      properties:
+        title:
+          type: string
+        contents:
+          type: string
+
     PostFilter:
       type: object
       description: Post Filter
