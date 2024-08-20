@@ -115,12 +115,6 @@ paths:
           description: successful operation
         '400':
           description: Invalid input
-        '422':
-          description: Validation exception
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiResponse'
 
           
   /posts/{postId}/title:
