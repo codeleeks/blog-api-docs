@@ -48,40 +48,12 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/PostPageResponse'
-  /posts/{postId}:
-    get:
-      tags:
-        - post
-      summary: Finds Post by id
-      description: Finds post by id
-      operationId: findPostById
-      parameters:
-        - name: postId
-          in: path
-          description: post id
-          required: true
-          schema:
-            type: integer
-            format: long
-      responses:
-        '200':
-          description: successful operation
-        '400':
-          description: Invalid ID supplied
     post:
       tags:
         - post
       summary: Add a new post
       description: Add a new pet
       operationId: addPost
-      parameters:
-        - name: postId
-          in: path
-          description: post id
-          required: true
-          schema:
-            type: integer
-            format: long
       requestBody:
         description: Create a new post
         content:
@@ -103,7 +75,27 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ApiResponse'
+                $ref: '#/components/schemas/ApiResponse'  
+  /posts/{postId}:
+    get:
+      tags:
+        - post
+      summary: Finds Post by id
+      description: Finds post by id
+      operationId: findPostById
+      parameters:
+        - name: postId
+          in: path
+          description: post id
+          required: true
+          schema:
+            type: integer
+            format: long
+      responses:
+        '200':
+          description: successful operation
+        '400':
+          description: Invalid ID supplied
     delete:
       tags:
         - post
